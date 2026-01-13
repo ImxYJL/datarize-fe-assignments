@@ -18,7 +18,7 @@ const PurchaseFrequencySection = ({ dateRange }: Props) => (
   <Card>
     <Card.Header className="flex flex-col gap-8">
       <div>
-        <Card.Title>Purchase Frequency by Price Range</Card.Title>
+        <Card.Title>구매 현황 분석</Card.Title>
         <Card.Description>
           가격대별 구매 분포 분석 ({dateRange.from} ~ {dateRange.to})
         </Card.Description>

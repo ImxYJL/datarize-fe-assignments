@@ -34,10 +34,13 @@ const CustomerDetailSection = ({ customerId, dateRange }: Props) => {
     <Card>
       <Card.Header>
         <div>
-          <Card.Title>Purchase Details</Card.Title>
-          <Card.Description>고객의 상세 구매 이력입니다.</Card.Description>
+          <Card.Title>상세 구매 내역</Card.Title>
+          <Card.Description>
+            <span className="font-bold text-foreground">ID #{customerId}</span> 고객님의 구매 이력입니다.
+          </Card.Description>
         </div>
       </Card.Header>
+
       <Card.Content>
         <ul className="space-y-4">
           {!isEmptyList ? (
