@@ -45,3 +45,12 @@ export const formatRangeLabel = (range: string): string => {
     .replace(DATE_CONFIG.infinityLabel, DATE_CONFIG.plusSymbol)
     .replace(/(\d+)/g, (match) => Number(match).toLocaleString())
 }
+
+/**
+ * 서버 전송을 위한 ISO 8601 형식 변환
+ */
+export const toServerDateFormat = (dateStr: string): string => {
+  if (!dateStr) return ''
+
+  return new Date(dateStr).toISOString()
+}
