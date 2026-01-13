@@ -6,11 +6,12 @@ type FormFieldProps = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
+  className?: string
 }
 
-const FormField = ({ label, ...props }: FormFieldProps) => {
+const FormField = ({ label, className, ...props }: FormFieldProps) => {
   return (
-    <div className="flex-1 min-w-0">
+    <div className={`flex-1 min-w-0 ${className}`}>
       <Input label={label} {...props} />
     </div>
   )
