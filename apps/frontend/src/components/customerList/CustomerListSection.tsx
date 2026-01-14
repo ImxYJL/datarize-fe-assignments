@@ -21,7 +21,7 @@ const CustomerListSection = () => {
   const renderCustomerRow = (customer: Customer) => (
     <tr
       key={customer.id}
-      onClick={() => setSelectedCustomerId(String(customer.id))}
+      onClick={() => setSelectedCustomerId(customer.id)}
       className="group hover:bg-muted/50 cursor-pointer transition-colors border-b border-border/50 last:border-0"
     >
       <td className="py-3.5 px-4 text-muted-foreground text-xs font-mono">{customer.id}</td>
