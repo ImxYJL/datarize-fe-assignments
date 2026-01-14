@@ -5,14 +5,13 @@ import DataTable from '../common/DataTable'
 import useGetPurchaseFrequency, { PurchaseFrequencyUI } from '@/queries/useGetPurchaseFrequency'
 import { useDateRangeValue } from '@/stores/useFilterStore'
 import DateRange from '../common/DateRange'
+import { useExportPurchases } from '@/hooks/useExportPurchases'
 
 const PurchaseFrequencySection = () => {
   const { data: frequencies, isLoading, isError } = useGetPurchaseFrequency()
   const { fromDate, toDate } = useDateRangeValue()
 
-  const handleDownloadCSV = () => {
-    console.log('CSV 다운로드 로직 실행')
-  }
+  const { exportCSV, isExporting } = useExportPurchases()
 
   const renderFrequencyRow = (item: PurchaseFrequencyUI, idx: number) => (
     <tr key={idx} className="hover:bg-muted/50 transition-colors border-b border-border/50 last:border-0">
@@ -47,8 +46,14 @@ const PurchaseFrequencySection = () => {
           </Card.Description>
         </div>
 
-        <Button variant="outline" size="sm" icon={<Download className="w-4 h-4" />} onClick={handleDownloadCSV}>
-          CSV로 다운로드
+        <Button
+          disabled={isExporting}
+          variant="outline"
+          size="sm"
+          icon={<Download className="w-4 h-4" />}
+          onClick={exportCSV}
+        >
+          {isExporting ? '추출 중...' : 'CSV 다운로드'}
         </Button>
       </Card.Header>
 

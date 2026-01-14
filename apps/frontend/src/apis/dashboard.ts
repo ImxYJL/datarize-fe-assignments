@@ -1,6 +1,6 @@
 import { client } from '@/lib/axios'
 import { ENDPOINT } from '@/constants/api'
-import { PurchaseDetail, PurchaseFrequency } from '@/types/dashboard'
+import { PurchaseDetail, PurchaseFrequency, RawPurchaseFrequency } from '@/types/dashboard'
 import { toServerDateFormat } from '@/utils/formatter'
 import { PAGE } from '@/constants/dashboard'
 
@@ -15,7 +15,7 @@ export const fetchPurchaseFrequency = async (from: string, to: string): Promise<
   return data
 }
 
-export const fetchRawPurchases = async (from: string, to: string): Promise<PurchaseDetail[]> => {
+export const fetchRawPurchases = async (from: string, to: string): Promise<RawPurchaseFrequency[]> => {
   const { data } = await client.get(ENDPOINT.purchases, {
     params: {
       from: toServerDateFormat(from),

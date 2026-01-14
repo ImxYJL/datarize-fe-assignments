@@ -3,6 +3,14 @@ export type PurchaseFrequency = {
   count: number
 }
 
+export type RawPurchaseFrequency = {
+  date: string
+  customerName: string
+  productName: string
+  price: number
+  quantity: number
+}
+
 export type Customer = {
   id: number
   name: string
