@@ -2,6 +2,7 @@ import { client } from '@/lib/axios'
 import { ENDPOINT } from '@/constants/api'
 import { PurchaseDetail, PurchaseFrequency } from '@/types/dashboard'
 import { toServerDateFormat } from '@/utils/formatter'
+import { PAGE } from '@/constants/dashboard'
 
 export const fetchPurchaseFrequency = async (from: string, to: string): Promise<PurchaseFrequency[]> => {
   const { data } = await client.get(ENDPOINT.purchaseFrequency, {
@@ -22,6 +23,39 @@ export const fetchRawPurchases = async (from: string, to: string): Promise<Purch
     },
   })
 
+  return data
+}
+
+// NOTE: 백엔드 명세에 따른 정렬 타입
+export type SortByApi = 'asc' | 'desc'
+
+export type FetchCustomerListParams = {
+  from: string
+  to: string
+  page: number
+  sortBy?: SortByApi
+  name?: string
+  limit?: number
+}
+
+export const fetchCustomerList = async ({
+  page,
+  from,
+  to,
+  sortBy,
+  name,
+  limit = PAGE.minLimit,
+}: FetchCustomerListParams) => {
+  const { data } = await client.get(ENDPOINT.customers, {
+    params: {
+      from: toServerDateFormat(from),
+      to: toServerDateFormat(to),
+      name,
+      sortBy,
+      page,
+      limit,
+    },
+  })
   return data
 }
 
