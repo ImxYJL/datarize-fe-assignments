@@ -4,11 +4,11 @@ import { DateRange } from '@/types/dashboard'
 
 type FilterState = {
   dateRange: DateRange
-  selectedCustomerId: string | null
+  selectedCustomerId: number | null
 
   actions: {
     setDates: (from: string, to: string) => void
-    setSelectedCustomerId: (id: string | null) => void
+    setSelectedCustomerId: (id: number | null) => void
     reset: () => void
   }
 }
