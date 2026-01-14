@@ -6,11 +6,19 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon?: ReactNode
 }
 
-const Button = ({ children, variant = 'outline', size = 'sm', icon, className = '', ...props }: ButtonProps) => {
+const Button = ({
+  children,
+  type = 'button',
+  variant = 'outline',
+  size = 'sm',
+  icon,
+  className = '',
+  ...props
+}: ButtonProps) => {
   const VARIANT = {
-    primary: 'bg-primary text-primary-foreground shadow enabled:hover:bg-primary/90',
-    outline: 'border border-border bg-background shadow-sm enabled:hover:bg-muted enabled:hover:text-foreground',
-    ghost: 'enabled:hover:bg-muted enabled:hover:text-foreground',
+    primary: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 active:scale-[0.98] transition-all',
+    outline: 'border border-border/80 bg-white text-foreground hover:bg-muted hover:border-border transition-colors',
+    ghost: 'text-muted-foreground hover:bg-muted hover:text-foreground transition-colors',
   }
 
   const SIZE = {
@@ -21,12 +29,13 @@ const Button = ({ children, variant = 'outline', size = 'sm', icon, className = 
 
   return (
     <button
+      type={type}
       className={`
         inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium transition-colors 
         outline-none focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:outline-none
         focus-visible:border-foreground/50
         
-        disabled:pointer-events-none disabled:opacity-50 gap-2
+        disabled:pointer-events-none disabled:opacity-40 disabled:grayscale
         ${VARIANT[variant]} 
         ${SIZE[size]} 
         ${className}
