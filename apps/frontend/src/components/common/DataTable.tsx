@@ -24,8 +24,13 @@ const DataTable = <T,>({
       <table className="w-full text-sm text-left border-collapse">
         <thead className="bg-muted/50 border-y border-border">
           <tr>
-            {headers.map((header) => (
-              <th key={header} className="px-4 py-3 font-medium text-muted-foreground">
+            {headers.map((header, index) => (
+              <th
+                key={header}
+                className={`px-4 py-3 font-medium text-muted-foreground ${
+                  index === headers.length - 1 ? 'text-right' : 'text-left'
+                }`}
+              >
                 {header}
               </th>
             ))}

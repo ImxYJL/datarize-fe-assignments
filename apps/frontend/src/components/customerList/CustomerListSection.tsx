@@ -28,9 +28,11 @@ const CustomerListSection = () => {
       <td className="py-3.5 px-4 text-foreground font-medium group-hover:text-primary transition-colors">
         {customer.name}
       </td>
-      <td className="py-3.5 px-4 text-center text-foreground">
+
+      <td className="py-3.5 px-4 text-left text-foreground">
         <span className="bg-muted px-2 py-1 rounded text-xs">{customer.count}건</span>
       </td>
+
       <td className="py-3.5 px-4 text-right text-foreground font-semibold">
         {customer.totalAmount.toLocaleString()}원
       </td>

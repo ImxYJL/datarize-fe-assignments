@@ -20,7 +20,7 @@ const PurchaseFrequencySection = () => {
       <td className="py-4 px-4 text-left font-medium text-foreground">{item.label}</td>
 
       {/* 2. 구매 건수 */}
-      <td className="py-4 px-4 text-center text-foreground">{item.count.toLocaleString()}건</td>
+      <td className="py-4 px-4 text-left text-foreground">{item.count.toLocaleString()}건</td>
 
       {/* 3. 퍼센트 바 및 수치 */}
       <td className="py-4 px-4">
