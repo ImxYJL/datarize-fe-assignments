@@ -22,3 +22,11 @@ export type DateRange = {
   fromDate: string
   toDate: string
 }
+
+export type Purchase = {
+  product: string
+  date: string
+  price: number
+  quantity: number
+  imgSrc?: string
+}

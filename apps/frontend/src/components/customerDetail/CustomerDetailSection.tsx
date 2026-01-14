@@ -1,54 +1,64 @@
+import { useGetCustomerPurchases } from '@/queries/useGetCustomerDetail'
 import Card from '../common/Card'
 import PurchaseItem from './PurchaseItem'
+import { useSelectedCustomerId } from '@/stores/useFilterStore'
 
-type Purchase = {
-  product: string
-  date: string
-  price: number
-  quantity: number
-  imgSrc?: string
+type StatusPlaceholderProps = {
+  message: string
+  type?: 'loading' | 'error' | 'empty'
 }
 
-type Props = {
-  customerId: number
-  dateRange: { from: string; to: string }
+const StatusPlaceholder = ({ message, type = 'empty' }: StatusPlaceholderProps) => {
+  const isLoading = type === 'loading'
+  const textColor = type === 'error' ? 'text-destructive' : 'text-muted-foreground'
+
+  return (
+    <div className={`py-20 text-center text-sm font-medium ${textColor} ${isLoading ? 'animate-pulse' : ''}`}>
+      {message}
+    </div>
+  )
 }
 
-const DUMMY_DETAILS: Record<number, Purchase[]> = {
-  1: [
-    {
-      product: '프리미엄 후드티',
-      date: '2025-01-10',
-      price: 89000,
-      quantity: 1,
-      imgSrc: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=200',
-    },
-  ],
-}
+const CustomerDetailSection = () => {
+  const selectedCustomerId = useSelectedCustomerId()
 
-const CustomerDetailSection = ({ customerId, dateRange }: Props) => {
-  const purchases = DUMMY_DETAILS[customerId] || []
+  const { data: purchases = [], isLoading, isError } = useGetCustomerPurchases(selectedCustomerId)
   const isEmptyList = purchases.length === 0
 
   return (
-    <Card>
+    <Card className="border-border/60 shadow-sm mt-8">
       <Card.Header>
-        <div>
-          <Card.Title>상세 구매 내역</Card.Title>
+        <div className="flex flex-col gap-1">
+          <Card.Title className="text-lg font-bold text-foreground">상세 구매 내역</Card.Title>
           <Card.Description>
-            <span className="font-bold text-foreground">ID #{customerId}</span> 고객님의 구매 이력입니다.
+            {selectedCustomerId ? (
+              <>
+                <span className="font-bold text-primary">ID #{selectedCustomerId}</span> 고객님의 선택 기간 내 구매
+                이력입니다.
+              </>
+            ) : (
+              '목록에서 고객을 선택하면 상세 내역이 표시됩니다.'
+            )}
           </Card.Description>
         </div>
       </Card.Header>
 
       <Card.Content>
-        <ul className="space-y-4">
-          {!isEmptyList ? (
-            purchases.map((purchase, idx) => <PurchaseItem key={idx} purchase={purchase} />)
-          ) : (
-            <div className="py-20 text-center text-muted-foreground">구매 내역이 없습니다.</div>
-          )}
-        </ul>
+        {!selectedCustomerId ? (
+          <StatusPlaceholder message="고객을 선택해 주세요." />
+        ) : isLoading ? (
+          <StatusPlaceholder message="구매 내역 분석 중..." type="loading" />
+        ) : isError ? (
+          <StatusPlaceholder message="데이터 로딩 실패" type="error" />
+        ) : isEmptyList ? (
+          <StatusPlaceholder message="해당 기간 내 구매 내역이 없습니다." />
+        ) : (
+          <ul className="space-y-4">
+            {purchases.map((purchase, idx) => (
+              <PurchaseItem key={`${selectedCustomerId}-${idx}`} purchase={purchase} />
+            ))}
+          </ul>
+        )}
       </Card.Content>
     </Card>
   )
