@@ -3,9 +3,12 @@ import Card from '../common/Card'
 import Button from '../common/Button'
 import DataTable from '../common/DataTable'
 import useGetPurchaseFrequency, { PurchaseFrequencyUI } from '@/queries/useGetPurchaseFrequency'
+import { useDateRangeValue } from '@/stores/useFilterStore'
+import DateRange from '../common/DateRange'
 
 const PurchaseFrequencySection = () => {
   const { data: frequencies, isLoading, isError } = useGetPurchaseFrequency()
+  const { fromDate, toDate } = useDateRangeValue()
 
   const handleDownloadCSV = () => {
     console.log('CSV 다운로드 로직 실행')
@@ -39,7 +42,9 @@ const PurchaseFrequencySection = () => {
       <Card.Header className="flex flex-row items-center justify-between space-y-0 pb-6">
         <div className="space-y-1">
           <Card.Title className="text-xl font-bold tracking-tight">가격대별 구매 빈도</Card.Title>
-          <Card.Description>선택한 기간 내 금액 구간별 구매 건수 분석입니다.</Card.Description>
+          <Card.Description>
+            <DateRange fromDate={fromDate} toDate={toDate} />의 금액 구간별 구매 건수 분석입니다.
+          </Card.Description>
         </div>
 
         <Button variant="outline" size="sm" icon={<Download className="w-4 h-4" />} onClick={handleDownloadCSV}>
