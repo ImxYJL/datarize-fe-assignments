@@ -13,7 +13,6 @@ git clone https://github.com/ImxYJL/datarize-fe-assignments.git
 
 # 의존성 설치 (모노레포 환경 주의사항 포함)
 
-cd frontend
 yarn install
 
 # 개발 서버 실행
