@@ -3,11 +3,17 @@ import { QUERY_KEY } from '@/queries/key'
 import { formatRangeLabel } from '@/utils/formatter'
 import { useDateRangeValue } from '@/stores/useFilterStore'
 import { fetchPurchaseFrequency } from '@/apis/dashboard'
+import { PurchaseFrequency } from '@/types/dashboard'
+
+export type PurchaseFrequencyUI = PurchaseFrequency & {
+  label: string // formatRangeLabel 결과
+  percent: number // 계산된 비율
+}
 
 const useGetPurchaseFrequency = () => {
   const dateRange = useDateRangeValue()
 
-  return useQuery({
+  return useQuery<PurchaseFrequency[], Error, PurchaseFrequencyUI[]>({
     queryKey: [QUERY_KEY.purchaseFrequency, dateRange.fromDate, dateRange.toDate],
     queryFn: () => fetchPurchaseFrequency(dateRange.fromDate, dateRange.toDate),
 
