@@ -11,7 +11,8 @@ type SortPanelProps = {
 }
 
 const SortingPanel = ({ sortKey, sortOrder, onKeyChange, onOrderToggle, isOrderDisabled }: SortPanelProps) => {
-  const currentOrderInfo = SORT_ORDERS[sortOrder]
+  const nextOrder = sortOrder === 'asc' ? 'desc' : 'asc'
+  const nextOrderInfo = SORT_ORDERS[nextOrder]
 
   return (
     <section className="flex items-center gap-3">
@@ -29,7 +30,7 @@ const SortingPanel = ({ sortKey, sortOrder, onKeyChange, onOrderToggle, isOrderD
 
       {/* 정렬 방향 토글 */}
       <Button variant="outline" size="sm" onClick={onOrderToggle} disabled={isOrderDisabled} className="min-w-[120px]">
-        {currentOrderInfo.label} 정렬하기
+        {nextOrderInfo.label} 정렬하기
       </Button>
     </section>
   )
